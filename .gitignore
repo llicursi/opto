@@ -26,6 +26,7 @@ hs_err_pid*
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 /out/
+src/main/resources/public/
 
 ### STS ###
 .apt_generated
