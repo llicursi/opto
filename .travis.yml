@@ -12,5 +12,5 @@ before_install:
 
 before_install:
   - npm i -g npm@latest
-  - npm i -g @angular/cli@8.0.3
+  - npm i -g @angular/cli@6.1.1
   - chmod +x mvnw
