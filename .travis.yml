@@ -9,3 +9,8 @@ after_success:
 
 before_install:
   - chmod +x mvnw
+
+before_install:
+  - npm i -g npm@latest
+  - npm i -g @angular/cli@8.0.3
+  - chmod +x mvnw
