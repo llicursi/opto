@@ -1,0 +1,39 @@
+.mat-column-time{
+  width: 80px;
+}
+
+.mat-column-calories{
+  width: 80px;
+}
+
+span.mat-cell-title-date{
+  font-size: 12px;
+  display: block;
+}
+
+td.mat-column-star {
+  width: 10px;
+  padding-right: 8px;
+}
+
+th.mat-column-position, td.mat-column-position {
+  padding-left: 8px;
+}
+
+.full-button{
+  width : 100%;
+  margin: 6px 2px;
+}
+
+
+.header-calories{
+  border-left: 6px solid #f0f0f0;
+}
+.expected-calories{
+  border-left: 6px solid #7dc16c;
+}
+.over-calories,
+.expected-calories.over-calories{
+  border-left: 6px solid #e95050;
+}
+

@@ -8,25 +8,24 @@ import javax.validation.constraints.NotNull;
 @Data
 @Entity
 @Table(
-        name = "users",
-        uniqueConstraints = @UniqueConstraint(name = "uc_id", columnNames = {"userId", "email"})
+        name = "user",
+        uniqueConstraints = @UniqueConstraint(name = "uc_id", columnNames = {"id", "email"})
 )
 public class UserDO {
 
     @Id
-    @GeneratedValue(generator = "seq_user_id", strategy = GenerationType.SEQUENCE)
-    @SequenceGenerator(name="seq_user_id", sequenceName = "SEQ_USER_ID", allocationSize=1)
-    private Long userId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Column(nullable = false, length = 40)
     @NotNull(message = "User name can not be null!")
     private String name;
 
-    @Column(nullable = false, length = 40)
+    @Column(nullable = false, length = 120)
     @NotNull(message = "User surname can not be null!")
     private String surname;
 
-    @Column(unique=true)
+    @Column(unique=true, length = 120)
     @NotNull(message = "User email can not be null!")
     private String email;
 

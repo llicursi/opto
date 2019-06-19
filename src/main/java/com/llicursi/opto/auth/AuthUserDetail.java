@@ -23,7 +23,7 @@ public class AuthUserDetail implements UserDetails {
     private List<SimpleGrantedAuthority> authorities;
 
     public AuthUserDetail(UserDO userDO) {
-        this.id = userDO.getUserId();
+        this.id = userDO.getId();
         this.username = userDO.getEmail();
         this.email = userDO.getEmail();
         this.password = userDO.getPassword();

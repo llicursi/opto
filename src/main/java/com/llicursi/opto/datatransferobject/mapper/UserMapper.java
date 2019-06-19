@@ -16,7 +16,7 @@ public class UserMapper {
     public static UserDTO convertToUserDTO(UserDO userDO)
     {
         UserDTO.UserDTOBuilder userDTOBuilder = UserDTO.newBuilder()
-                .setId(userDO.getUserId())
+                .setId(userDO.getId())
                 .setName(userDO.getName())
                 .setSurname(userDO.getSurname())
                 .setEmail(userDO.getEmail())

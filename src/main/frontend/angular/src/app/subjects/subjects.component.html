@@ -1,0 +1,52 @@
+<div class="subject-container">
+
+  <div class="button-row">
+    <a mat-flat-button class="full-button" color="primary" (click)="createNewsubject()">
+      <mat-icon>add</mat-icon> Propose new subject
+    </a>
+  </div>
+  <div class="subject-loading-shade"
+       *ngIf="isLoadingResults">
+      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+
+  <div class="mat-elevation-z1" style="border-top:1px solid #DDD">
+    <table mat-table #table [dataSource]="data" class="subject-table"
+           matSort matSortActive="prod_name" matSortDisableClear matSortDirection="asc">
+
+      <ng-container matColumnDef="time">
+        <th class="header-calories" mat-header-cell *matHeaderCellDef>Time</th>
+        <td mat-cell *matCellDef="let row" class="expected-calories" [ngClass]="{'over-calories': calPerDay[row.date] > maxCalPerDay}">
+          <span class="mat-cell-title-date">{{row.date | date:'MMM d'}}</span>
+          {{row.time}}
+        </td>
+      </ng-container>
+
+      <!-- Product Name Column -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Desc</th>
+        <td mat-cell *matCellDef="let row">{{row.description}}</td>
+      </ng-container>
+
+      <!-- Product Price Column -->
+      <ng-container matColumnDef="calories">
+        <th mat-header-cell *matHeaderCellDef>Calories</th>
+        <td mat-cell *matCellDef="let row">{{row.calories}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="star" >
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <a mat-icon-button
+             (click)="editsubject(element)">
+            <mat-icon>edit</mat-icon>
+          </a>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+  </div>
+</div>

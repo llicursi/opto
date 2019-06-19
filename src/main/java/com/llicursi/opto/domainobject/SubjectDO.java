@@ -8,27 +8,38 @@ import java.util.Date;
 
 @Data
 @Entity
+@Table(name = "subject")
 public class SubjectDO {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "subject_id")
-    private Long subjectId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=false, updatable=false)
+    private UserDO user;
 
     @NotNull
-    private Date startDate;
+    @Column
+    private Date creation;
 
     @NotNull
-    private Date endDate;
+    @Column
+    private Date due;
 
     @NotNull
+    @Column(length = 70)
     private String title;
 
+    @Column
     private String description;
 
-    public SubjectDO(Date startDate, Date endDate) {
-        this.startDate = startDate;
-        this.endDate = endDate;
+    public SubjectDO(@NotNull UserDO user, @NotNull Date creation, @NotNull Date due, @NotNull String title, String description) {
+        this.user = user;
+        this.creation = creation;
+        this.due = due;
+        this.title = title;
+        this.description = description;
     }
-
 }
