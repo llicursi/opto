@@ -15,6 +15,7 @@ import {JwtInterceptor} from './interceptors/jwt.interceptor';
 import {HasRoleDirective} from './directives/has.role.directive';
 import {AuthenticatedDirective} from './directives/authenticated.directive';
 import {Error404Component} from './pages/error404/error404.component';
+import {LoginRegisterComponent} from './login-register/login-register.component';
 
 @NgModule({
   exports: [
@@ -27,6 +28,7 @@ import {Error404Component} from './pages/error404/error404.component';
     Error404Component,
     HasRoleDirective,
     LoginComponent,
+    LoginRegisterComponent,
   ],
   imports: [
     AppRoutingModule,
