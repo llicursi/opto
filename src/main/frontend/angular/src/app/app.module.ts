@@ -9,38 +9,38 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {AuthGuard} from './guard/auth.guard';
 import {LoginComponent} from './login/login.component';
-// import {AlertsComponent} from './alerts/alerts.component';
-// import {fakeBackendProvider} from './interceptors/fake-backend.js';
-// import {ErrorInterceptor} from './interceptors/error.interceptor';
-// import {JwtInterceptor} from './interceptors/jwt.interceptor';
+import {AlertsComponent} from './alerts/alerts.component';
+import {ErrorInterceptor} from './interceptors/error.interceptor';
+import {JwtInterceptor} from './interceptors/jwt.interceptor';
 import {HasRoleDirective} from './directives/has.role.directive';
 import {AuthenticatedDirective} from './directives/authenticated.directive';
-// import {Error404Component} from './pages/error404/error404.component';
+import {Error404Component} from './pages/error404/error404.component';
 
 @NgModule({
   exports: [
     HasRoleDirective
   ],
   declarations: [
+    AlertsComponent,
     AppComponent,
-  //  Error404Component,
-    LoginComponent,
     AuthenticatedDirective,
+    Error404Component,
     HasRoleDirective,
+    LoginComponent,
   ],
   imports: [
-    ReactiveFormsModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule,
     MaterialModule,
-    BrowserAnimationsModule
+    ReactiveFormsModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
-/*    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},*/
+    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     AuthGuard],
   bootstrap: [AppComponent]
 })

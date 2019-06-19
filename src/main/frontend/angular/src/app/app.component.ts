@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import {Router} from '@angular/router';
-import {User} from './models/user';
 import {AuthenticationService} from './services/authentication.service';
+import {ActivationEnd, Router} from '@angular/router';
+import {Authorization} from './models/authorization';
 
 @Component({
   selector: 'app-root',
@@ -10,13 +10,23 @@ import {AuthenticationService} from './services/authentication.service';
 })
 export class AppComponent {
   title = 'opto-app';
-  currentUser: User;
+
+  currentUser: Authorization;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService
   ) {
     this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+    router.events.subscribe(event => {
+      if (event instanceof ActivationEnd) {
+        if (event.snapshot.data.title) {
+          this.title = event.snapshot.data.title;
+        } else {
+          this.title = '';
+        }
+      }
+    });
   }
 
   public logout() {
