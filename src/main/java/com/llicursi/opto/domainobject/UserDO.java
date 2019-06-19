@@ -36,8 +36,7 @@ public class UserDO {
     public UserDO(){
     }
 
-    public UserDO(Long userId, String name, String surname, String email, String password, String role) {
-        this.userId = userId;
+    public UserDO(String name, String surname, String email, String password, String role) {
         this.name = name;
         this.surname = surname;
         this.email = email;

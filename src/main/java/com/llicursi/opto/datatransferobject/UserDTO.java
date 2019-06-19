@@ -13,6 +13,10 @@ public class UserDTO {
     @NotNull(message = "User name can not be null!")
     private String name;
 
+    @NotNull(message = "User surname can not be null!")
+    private String surname;
+
+    @NotNull(message = "User email can not be null!")
     private String email;
 
     @JsonIgnore
@@ -24,9 +28,10 @@ public class UserDTO {
     public UserDTO(){
     }
 
-    public UserDTO(Long id, String name, String email, String password, String role) {
+    public UserDTO(Long id, String name, String surname, String email, String password, String role) {
         this.id = id;
         this.name = name;
+        this.surname = surname;
         this.email = email;
         this.password = password;
         this.role = role;
@@ -46,6 +51,14 @@ public class UserDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
     }
 
     public String getEmail() {
@@ -83,6 +96,7 @@ public class UserDTO {
         private Long id;
         private String name;
         private String email;
+        private String surname;
         private String password;
         private String role;
 
@@ -94,6 +108,11 @@ public class UserDTO {
 
         public UserDTOBuilder setName(String name) {
             this.name = name;
+            return this;
+        }
+
+        public UserDTOBuilder setSurname(String name) {
+            this.surname = surname;
             return this;
         }
 
@@ -115,7 +134,7 @@ public class UserDTO {
 
         public UserDTO createUserDTO()
         {
-            return new UserDTO(id, name, email, password, role);
+            return new UserDTO(id, name, surname, email, password, role);
         }
     }
 
