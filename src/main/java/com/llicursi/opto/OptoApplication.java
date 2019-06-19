@@ -11,9 +11,4 @@ public class OptoApplication {
 		SpringApplication.run(OptoApplication.class, args);
 	}
 
-	@RequestMapping("/{path:[^\\.]+}/**")
-	public String forward() {
-		return "forward:/";
-	}
-
 }

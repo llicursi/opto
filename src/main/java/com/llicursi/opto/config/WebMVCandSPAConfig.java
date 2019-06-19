@@ -5,6 +5,9 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+/**
+ * Configures the web
+ */
 @Configuration
 public class WebMVCandSPAConfig implements WebMvcConfigurer {
 
