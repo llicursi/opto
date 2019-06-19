@@ -16,6 +16,8 @@ import {HasRoleDirective} from './directives/has.role.directive';
 import {AuthenticatedDirective} from './directives/authenticated.directive';
 import {Error404Component} from './pages/error404/error404.component';
 import {LoginRegisterComponent} from './login-register/login-register.component';
+import {UsersComponent} from './users/users.component';
+import {UsersModalComponent} from './users-modal/users-modal.component';
 
 @NgModule({
   exports: [
@@ -29,6 +31,8 @@ import {LoginRegisterComponent} from './login-register/login-register.component'
     HasRoleDirective,
     LoginComponent,
     LoginRegisterComponent,
+    UsersComponent,
+    UsersModalComponent,
   ],
   imports: [
     AppRoutingModule,

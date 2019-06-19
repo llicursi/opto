@@ -1,0 +1,50 @@
+<div class="user-container">
+  <div class="user-loading-shade" *ngIf="isLoadingResults">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+  </div>
+  <div class="button-row">
+    <a mat-flat-button class="full-button" color="primary" (click)="createNewUser()">
+      <mat-icon>add</mat-icon> New user
+    </a>
+  </div>
+
+  <div class="mat-elevation-z1" style="border-top:1px solid #DDD">
+    <table mat-table #table [dataSource]="data" class="user-table"
+           matSort matSortActive="prod_name" matSortDisableClear matSortDirection="asc">
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let row">{{row.name}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let row">{{row.email}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef>Roles</th>
+        <td mat-cell *matCellDef="let row">{{row.role}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="star" >
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let row">
+          <a mat-icon-button (click)="editUser(row)" title="Edit user">
+            <mat-icon>edit</mat-icon>
+          </a>
+          <a mat-icon-button (click)="editUser(row)" title="Change settings">
+            <mat-icon>widgets</mat-icon>
+          </a>
+          <a *hasRole="['ADMIN']" mat-icon-button [routerLink]="['/users',row.id,'meals']" title="List Meals">
+            <mat-icon>restaurant_menu</mat-icon>
+          </a>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+  </div>
+</div>
