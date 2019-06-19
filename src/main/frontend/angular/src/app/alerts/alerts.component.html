@@ -1,0 +1,4 @@
+<div *ngIf="message" class="mat-elevation-z2"
+     [ngClass]="{ 'alert': message, 'alert-success': message.type === 'success', 'alert-danger': message.type === 'error' } ">
+  {{message.text}}
+</div>

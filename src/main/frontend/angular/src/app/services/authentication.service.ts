@@ -1,45 +1,62 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
-import {User} from '../models/user';
+import {Authorization} from '../models/authorization';
 import {environment} from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  private currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
+  private currentUserSubject: BehaviorSubject<Authorization>;
+  public currentUser: Observable<Authorization>;
+  private basicAuth = btoa('web:10c25665e49274c39b8e8f7ad6e2a3d0b0bc5052');
 
   constructor(private http: HttpClient) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUserSubject = new BehaviorSubject<Authorization>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  public get currentUserValue(): User {
+  public get currentUserValue(): Authorization {
     return this.currentUserSubject.value;
   }
 
-  login(username: string, password: string) {
-    console.log("auth");
-    return this.http.post<any>(`${environment.apiUrl}/users/authenticate`, { username, password })
-      .pipe(map(user => {
-        console.log("Response from user : ");
-        console.log(user);
-        // login successful if there's a jwt token in the response
-        if (user && user.token) {
-          // store user details and jwt token in local storage to keep user logged in between page refreshes
+  /**
+   * Authenticates a user via oauth2 and provides name and token
+   * @param username User credential
+   * @param password Password
+   */
+  public login(username: string, password: string) {
 
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          this.currentUserSubject.next(user);
+    const bodyPaylod = new URLSearchParams();
+    bodyPaylod.set('grant_type', 'password');
+    bodyPaylod.set('username', username);
+    bodyPaylod.set('password', password);
+
+    const headers = {
+      Authorization: 'Basic ' + this.basicAuth,
+      'Content-type': 'application/x-www-form-urlencoded'
+    };
+
+    return this.http.post<any>(
+      `${environment.apiUrl}/oauth/token?grant_type=password`,
+      bodyPaylod.toString(),
+      {headers})
+      .pipe(map(userAuth => {
+
+        if (userAuth && userAuth.access_token) {
+          localStorage.setItem('currentUser', JSON.stringify(userAuth));
+          this.currentUserSubject.next(userAuth);
         }
-
-        return user;
+        return userAuth;
       }));
   }
 
-  logout() {
+  /**
+   * Removes current user from local data and notify
+   */
+  public logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);

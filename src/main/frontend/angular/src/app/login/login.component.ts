@@ -43,6 +43,10 @@ export class LoginComponent implements OnInit {
   // convenience getter for easy access to form fields
   get f() { return this.loginForm.controls; }
 
+  /**
+   * Submit the user and password to authentication service
+   * if form is valid
+   */
   onSubmit() {
     this.submitted = true;
 
@@ -59,9 +63,20 @@ export class LoginComponent implements OnInit {
           this.router.navigate([this.returnUrl]);
         },
         error => {
-          this.alertService.error(error);
+          this.alertService.error(this.parseMessage(error));
           this.loading = false;
         });
+  }
+
+  /**
+   * Converts the message errors into something readable
+   * @param error oath error message type
+   */
+  private parseMessage(error: string): string {
+    if (error === 'invalid_grant') {
+      return 'User or password are wrong';
+    }
+    return error;
   }
 
 }

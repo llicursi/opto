@@ -1,0 +1,19 @@
+.alert{
+  position: relative;
+  padding: .75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  text-align: center;
+  background: #f0f0f0;
+  font-style: italic;
+}
+
+.alert-success{
+  background: #dbefdc;
+  color: #285b2a;
+}
+
+.alert-danger{
+  color: #7f231c;
+  background-color: #fdd9d7;
+}
