@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @Table(
         name = "users",
-        uniqueConstraints = @UniqueConstraint(name = "uc_id", columnNames = {"userId"})
+        uniqueConstraints = @UniqueConstraint(name = "uc_id", columnNames = {"userId", "email"})
 )
 public class UserDO {
 
@@ -22,7 +22,8 @@ public class UserDO {
     @NotNull(message = "User surname can not be null!")
     private String surname;
 
-    @Column
+    @Column(unique=true)
+    @NotNull(message = "User email can not be null!")
     private String email;
 
     @Column(nullable = false, length = 64)

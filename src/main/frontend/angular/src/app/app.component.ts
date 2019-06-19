@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import {Router} from '@angular/router';
+import {User} from './models/user';
+import {AuthenticationService} from './services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +9,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'webapp';
+  title = 'opto-app';
+  currentUser: User;
+
+  constructor(
+    private router: Router,
+    private authenticationService: AuthenticationService
+  ) {
+    this.authenticationService.currentUser.subscribe(x => this.currentUser = x);
+  }
+
+  public logout() {
+    this.authenticationService.logout();
+    location.reload();
+  }
 }

@@ -30,4 +30,8 @@ public class OAuth2ResourceServerConfig
                 .antMatchers("/**").permitAll()
         ;
     }
+
+
+
+
 }
