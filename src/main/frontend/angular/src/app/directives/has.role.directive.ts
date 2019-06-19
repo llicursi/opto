@@ -6,7 +6,7 @@ import {AuthenticationService} from '../services/authentication.service';
 })
 export class HasRoleDirective implements OnInit {
   // the role the user must have
-  @Input('hasRole') role: string;
+  @Input('hasRole') roles: string[];
   isVisible = false;
 
   /**
@@ -27,7 +27,7 @@ export class HasRoleDirective implements OnInit {
   ngOnInit() {
     this.changeVisibility();
     this.authenticationService.currentUser.subscribe(user => {
-      console.log('AUTH-CHANGE-VISIBILITY')
+      console.log('AUTH-CHANGE-VISIBILITY');
       this.changeVisibility();
     });
   }
@@ -35,7 +35,7 @@ export class HasRoleDirective implements OnInit {
   /**
    * Toggle view visibility depending on the users role found
    */
-  changeVisibility(){
+  changeVisibility() {
     if (this.hasRole()) {
       if (!this.isVisible) {
         this.isVisible = true;
@@ -48,14 +48,21 @@ export class HasRoleDirective implements OnInit {
   }
 
   /**
-   * Check if current user has a role provided by the directive
+   * Check if current user has all roles expected by the directive
    * @return whether the role was found or not
    */
   hasRole() {
     const currentUser = this.authenticationService.currentUserValue;
-    if (currentUser) {
-      const found = currentUser.roles.find(userRole => userRole == this.role);
-      if (found) {
+    if (currentUser && currentUser.roles) {
+
+      const expected = this.roles.length;
+      let found = 0;
+      this.roles.forEach(role => {
+        if (currentUser.roles.includes(role)) {
+          found++;
+        }
+      });
+      if (found === expected) {
         return true;
       }
     }
