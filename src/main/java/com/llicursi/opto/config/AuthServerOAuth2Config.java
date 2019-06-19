@@ -26,12 +26,13 @@ public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Override
+    /*@Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
         oauthServer
             .tokenKeyAccess("permitAll()")
             .checkTokenAccess("isAuthenticated()");
-    }
+
+    }*/
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {

@@ -20,17 +20,30 @@ public class OAuth2ResourceServerConfig
 
     @Override
     public void configure(ResourceServerSecurityConfigurer resources){
+
         resources.resourceId("product_api").tokenStore(tokenStore);
+
     }
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/api/v*/register").permitAll()
                 .antMatchers("/api/v*/**").authenticated()
                 .antMatchers("/**").permitAll()
+                .and().csrf().disable()
         ;
     }
-
+    /*
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http
+            .csrf().disable()
+            .authorizeRequests()
+            .anyRequest().authenticated()
+            .antMatchers("/oauth/**").permitAll()
+        ;
+    }*/
 
 
 

@@ -38,15 +38,5 @@ public class AuthUtilsTest {
         assertThat(authorities.get(0).getAuthority()).isEqualTo("ROLE_USER");
     }
 
-    @Test
-    public void givenRetrieveUserId_whenUserDOHasId_thenReturnPrincipalUserId(){
-        final Long expectedUserId =  10l;
-        UserDO userDO = new UserDO("ANY", "ANY", "ANY", "ANY", "ANY");
-
-        TestingAuthenticationToken testingAuthenticationToken = new TestingAuthenticationToken(new AuthUserDetail(userDO), null);
-        Long userId = AuthUtils.retrieveUserId(testingAuthenticationToken);
-        assertThat(userId).isEqualTo(expectedUserId);
-    }
-
 
 }

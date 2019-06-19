@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("register")
+@RequestMapping("/api/v1")
 public class RegisterController {
 
     private final UserService userService;
@@ -18,13 +18,7 @@ public class RegisterController {
         this.userService = userService;
     }
 
-    @GetMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    public String test() {
-       return "Ok";
-    }
-
-    @PostMapping
+    @PostMapping("/register")
     @ResponseStatus(HttpStatus.CREATED)
     public void createUser(@RequestBody UserRegisterDTO userRegisterDTO) {
         UserMapper.convertToUserDTO(userService.create(UserMapper.convertToUserDO(userRegisterDTO)));

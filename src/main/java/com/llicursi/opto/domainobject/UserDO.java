@@ -11,7 +11,8 @@ import javax.validation.constraints.NotNull;
 public class UserDO {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "seq_user_id", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name="seq_user_id", sequenceName = "SEQ_USER_ID", allocationSize=1)
     private Long userId;
 
     @Column(nullable = false, length = 40)
