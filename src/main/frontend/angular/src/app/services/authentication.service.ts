@@ -40,7 +40,7 @@ export class AuthenticationService {
     };
 
     return this.http.post<any>(
-      `/oauth/token?grant_type=password`,
+      `${environment.baseUrl}/oauth/token?grant_type=password`,
       bodyPaylod.toString(),
       {headers})
       .pipe(map(userAuth => {

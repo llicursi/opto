@@ -33,6 +33,7 @@ export class LoginRegisterComponent implements OnInit {
   ngOnInit() {
     this.registerForm = this.formBuilder.group({
       name: ['', Validators.required],
+      surname: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(6)]]
     });
@@ -58,6 +59,7 @@ export class LoginRegisterComponent implements OnInit {
           this.router.navigate(['/login']);
         },
         error => {
+          console.log(error);
           this.alertService.error(error);
           this.loading = false;
         });
