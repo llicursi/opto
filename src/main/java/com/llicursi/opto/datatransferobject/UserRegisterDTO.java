@@ -1,7 +1,10 @@
 package com.llicursi.opto.datatransferobject;
 
+import lombok.Getter;
+
 import javax.validation.constraints.NotNull;
 
+@Getter
 public class UserRegisterDTO {
 
     @NotNull(message = "User name can not be null!")
@@ -26,17 +29,9 @@ public class UserRegisterDTO {
         this.password = password;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public UserRegisterDTO setName(String name) {
         this.name = name;
         return this;
-    }
-
-    public String getSurname() {
-        return surname;
     }
 
     public UserRegisterDTO setSurname(String surname) {
@@ -44,17 +39,9 @@ public class UserRegisterDTO {
         return this;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public UserRegisterDTO setEmail(String email) {
         this.email = email;
         return this;
-    }
-
-    public String getPassword() {
-        return password;
     }
 
     public UserRegisterDTO setPassword(String password) {
