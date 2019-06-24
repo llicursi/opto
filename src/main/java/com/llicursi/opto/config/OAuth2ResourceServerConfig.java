@@ -34,17 +34,5 @@ public class OAuth2ResourceServerConfig
                 .and().csrf().disable()
         ;
     }
-    /*
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http
-            .csrf().disable()
-            .authorizeRequests()
-            .anyRequest().authenticated()
-            .antMatchers("/oauth/**").permitAll()
-        ;
-    }*/
-
-
 
 }

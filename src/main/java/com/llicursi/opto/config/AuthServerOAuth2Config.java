@@ -26,17 +26,9 @@ public class AuthServerOAuth2Config extends AuthorizationServerConfigurerAdapter
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    /*@Override
-    public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-        oauthServer
-            .tokenKeyAccess("permitAll()")
-            .checkTokenAccess("isAuthenticated()");
-
-    }*/
-
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-        clients.jdbc(dataSource)
+        clients.inMemory()
             .withClient("web")
             .secret("$2a$06$musOBasmxNW3tHA2sW2AVO9FVzzmjKc4/8Wcu8V5li1JCj2023vlG")
             .authorizedGrantTypes("password", "authorization_code", "refresh_token")
