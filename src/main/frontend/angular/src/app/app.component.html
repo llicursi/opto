@@ -10,10 +10,6 @@
           <mat-icon >more_vert</mat-icon>
         </button>
         <mat-menu #menu="matMenu">
-          <button [routerLink]="['settings/']" mat-menu-item>
-            <mat-icon>widgets</mat-icon>
-            Settings
-          </button>
           <button (click)="logout()" mat-menu-item>
             <mat-icon>exit_to_app</mat-icon>
             Logout

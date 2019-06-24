@@ -6,6 +6,7 @@ import {MatDialog, MatTable} from '@angular/material';
 import {AlertService} from '../services/alerts.service';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
+import {SubjectsModalComponent} from '../subjects-modal/subjects-modal.component';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 @Component({
   selector: 'app-subjects',
@@ -64,6 +65,30 @@ export class SubjectsComponent implements OnInit, OnDestroy {
         console.log(err);
         this.isLoadingResults = false;
       });
+  }
+
+  /**
+   * Creates the new meal on a display dialog
+   */
+  createNewSubject() {
+
+    const element = new Subject();
+    element.description = '';
+    element.title = '';
+    element.start = (new Date()).toISOString();
+    element.due = (new Date()).toISOString();
+
+    const modalCreate = this.dialog.open(SubjectsModalComponent, {
+      data: {
+        title: 'New subject',
+        subject: element,
+      }
+    });
+    modalCreate.afterClosed().subscribe(createdSubject => {
+      if (!!createdSubject && createdSubject.title) {
+        this.saveSubject(createdSubject);
+      }
+    });
   }
 
   /**

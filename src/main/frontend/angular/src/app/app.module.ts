@@ -19,6 +19,7 @@ import {LoginRegisterComponent} from './login-register/login-register.component'
 import {UsersComponent} from './users/users.component';
 import {UsersModalComponent} from './users-modal/users-modal.component';
 import {SubjectsComponent} from './subjects/subjects.component';
+import {SubjectsModalComponent} from './subjects-modal/subjects-modal.component';
 
 @NgModule({
   exports: [
@@ -33,6 +34,7 @@ import {SubjectsComponent} from './subjects/subjects.component';
     LoginComponent,
     LoginRegisterComponent,
     SubjectsComponent,
+    SubjectsModalComponent,
     UsersComponent,
     UsersModalComponent,
   ],
@@ -50,6 +52,9 @@ import {SubjectsComponent} from './subjects/subjects.component';
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true},
     AuthGuard],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    SubjectsModalComponent
+  ]
 })
 export class AppModule { }

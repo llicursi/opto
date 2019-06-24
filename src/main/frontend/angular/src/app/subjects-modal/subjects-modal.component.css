@@ -1,0 +1,9 @@
+.delete-confirm{
+  display: block;
+  float: left;
+  margin: 10px 0;
+}
+
+a.right-button{
+  float: right;
+}
