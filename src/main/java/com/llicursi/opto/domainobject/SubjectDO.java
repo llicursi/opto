@@ -16,13 +16,14 @@ public class SubjectDO {
     @Column(name = "id")
     private Long id;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name="user_id", nullable=false, updatable=false)
     private UserDO user;
 
     @NotNull
     @Column
-    private Date creation;
+    private Date start;
 
     @NotNull
     @Column
@@ -34,12 +35,18 @@ public class SubjectDO {
 
     @Column
     private String description;
+    
+    @Column
+    private Boolean active;
 
-    public SubjectDO(@NotNull UserDO user, @NotNull Date creation, @NotNull Date due, @NotNull String title, String description) {
-        this.user = user;
-        this.creation = creation;
+    public SubjectDO(@NotNull String title, String description, @NotNull Date start, @NotNull Date due) {
+        this.start = start;
         this.due = due;
         this.title = title;
         this.description = description;
+        this.active = true;
+    }
+
+    public SubjectDO(){
     }
 }
