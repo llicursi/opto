@@ -29,7 +29,7 @@ create table vote(
     subject_id BIGINT NOT NULL,
     agree BOOL NOT NULL,
     changes INT DEFAULT 1,
-    creation DATE DEFAULT CURRENT_TIMESTAMP,
+    creation DATE,
     PRIMARY KEY (user_id, subject_id),
     FOREIGN KEY (user_id) REFERENCES user(id),
     FOREIGN KEY (subject_id) REFERENCES subject(id)
