@@ -25,12 +25,12 @@ create table subject(
 -- Vote
 drop table if exists vote;
 create table vote(
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
     subject_id BIGINT NOT NULL,
     agree BOOL NOT NULL,
     changes INT DEFAULT 1,
-    creation DATE NOT NULL,
+    creation DATE DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, subject_id),
     FOREIGN KEY (user_id) REFERENCES user(id),
     FOREIGN KEY (subject_id) REFERENCES subject(id)
 );
