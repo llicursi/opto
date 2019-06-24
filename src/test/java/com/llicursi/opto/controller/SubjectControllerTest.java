@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @WebAppConfiguration
-public class ServiceControllerTest {
+public class SubjectControllerTest {
 
     @Autowired
     private WebApplicationContext context;
@@ -55,7 +55,7 @@ public class ServiceControllerTest {
     }
 
     @Test
-    public void givenSubjectApi_whenSingleActiveSubject_thenReturnSingleElementInList() throws Exception {
+    public void givenSubjectApi_whenGET_thenReturnSingleElementInList() throws Exception {
 
         String tokenUser1 = obtainAccessToken("user@opto.com", "123");
 
@@ -70,7 +70,7 @@ public class ServiceControllerTest {
 
 
     @Test
-    public void givenUserSubjectApi_whenSessionUserHasSubject_thenReturn2Subjects() throws Exception {
+    public void givenUserSubjectApi_whenGET_thenReturn2SubjectsRelatedToSessionUser() throws Exception {
 
         String tokenUser1 = obtainAccessToken("user@opto.com", "123");
 
@@ -82,6 +82,22 @@ public class ServiceControllerTest {
                 .andExpect(jsonPath("$", hasSize(2)))
         ;
     }
+
+/*
+    @Test
+    public void givenSubjectApi_whenPOSTValidJson_thenCreated() throws Exception {
+
+        String tokenUser1 = obtainAccessToken("user@opto.com", "123");
+
+        mvc.perform(get(BASE_URL_API + "/user/subject")
+                .header("Authorization", "Bearer " + tokenUser1))
+                .andDo(print())
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$", hasSize(2)))
+        ;
+    }
+*/
 
 
 
