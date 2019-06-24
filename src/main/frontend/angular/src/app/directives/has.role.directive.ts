@@ -57,7 +57,7 @@ export class HasRoleDirective implements OnInit {
 
       const expected = this.roles.length;
       let found = 0;
-      this.roles.forEach(role => {
+      Array.from(this.roles).forEach(role => {
         if (currentUser.roles.includes(role)) {
           found++;
         }
