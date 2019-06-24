@@ -4,7 +4,6 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
 import {User} from '../models/user';
 import {Roles} from '../guard/roles';
 import {AlertService} from '../services/alerts.service';
-import {componentNeedsResolution} from '@angular/core/src/metadata/resource_loading';
 
 @Component({
   selector: 'app-users-modal',
@@ -14,14 +13,13 @@ import {componentNeedsResolution} from '@angular/core/src/metadata/resource_load
 export class UsersModalComponent implements OnInit {
   hideDeleteButton = false;
   requestConfirmation = false;
-  title: String = 'Edit user';
+  title = 'Edit user';
   stateForm: FormGroup = this.fb.group({
     name: new FormControl({value: ''}, Validators.required),
     email: new FormControl({value: ''}, Validators.required),
     password: new FormControl({value: '123'}, Validators.required),
     roleUser: new FormControl({value: false}),
     roleAdmin: new FormControl({value: false}),
-    roleManager: new FormControl({value: false}),
     id: 0
   });
 
@@ -38,8 +36,7 @@ export class UsersModalComponent implements OnInit {
       password: element.password,
       id: element.id,
       roleUser: this.hasRole(element, Roles.USER.toString()),
-      roleAdmin: this.hasRole(element, Roles.ADMIN.toString()),
-      roleManager: this.hasRole(element, Roles.MANAGER.toString())
+      roleAdmin: this.hasRole(element, Roles.ADMIN.toString())
     });
   }
 
@@ -61,7 +58,7 @@ export class UsersModalComponent implements OnInit {
     }
 
     const userResponse = this.getUserFromForm();
-    if (userResponse.role.length == 0) {
+    if (userResponse.role.length === 0) {
       this.alertService.snackError('Select at least one ROLE');
       return;
     }
@@ -110,9 +107,6 @@ export class UsersModalComponent implements OnInit {
     }
     if (stateForm.value.roleAdmin) {
       rolesSelected.push(Roles.ADMIN.toString());
-    }
-    if (stateForm.value.roleManager) {
-      rolesSelected.push(Roles.MANAGER.toString());
     }
 
     return rolesSelected.join(',');
