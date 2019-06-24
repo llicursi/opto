@@ -16,8 +16,9 @@ create table subject(
     user_id BIGINT NOT NULL,
     title VARCHAR(70),
     description VARCHAR(255),
-    creation DATE NOT NULL,
+    start DATE NOT NULL,
     due DATE NOT NULL,
+    active BOOLEAN DEFAULT true,
     FOREIGN KEY (user_id) REFERENCES user(id)
 );
 
