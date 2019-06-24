@@ -14,7 +14,7 @@ drop table if exists subject;
 create table subject(
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     user_id BIGINT NOT NULL,
-    title VARCHAR(70) UNIQUE,
+    title VARCHAR(70),
     description VARCHAR(255),
     creation DATE NOT NULL,
     due DATE NOT NULL,
@@ -33,9 +33,6 @@ create table vote(
     FOREIGN KEY (user_id) REFERENCES user(id),
     FOREIGN KEY (subject_id) REFERENCES subject(id)
 );
-
-COMMIT;
-
 
 -- Oauth required tables
 drop table if exists oauth_client_details;
