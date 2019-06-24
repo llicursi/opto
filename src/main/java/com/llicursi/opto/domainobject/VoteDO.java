@@ -23,7 +23,4 @@ public class VoteDO {
     @Column
     private Date creation;
 
-
-    public VoteDO(){
-    }
 }

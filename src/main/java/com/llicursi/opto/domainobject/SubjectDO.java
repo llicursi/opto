@@ -1,6 +1,7 @@
 package com.llicursi.opto.domainobject;
 
 import lombok.Data;
+import org.hibernate.annotations.Formula;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -39,6 +40,9 @@ public class SubjectDO {
     
     @Column
     private Boolean active;
+
+    @Formula("select count(*) from vote where vote.subject_id = id")
+    private Integer votes;
 
     public SubjectDO(@NotNull String title, String description, @NotNull Date start, @NotNull Date due) {
         this.start = start;
