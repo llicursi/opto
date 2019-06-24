@@ -1,5 +1,7 @@
 package com.llicursi.opto.domainobject;
 
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,6 +16,7 @@ import javax.validation.constraints.NotNull;
 public class UserDO {
 
     @Id
+    @JsonIgnore
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -29,10 +32,12 @@ public class UserDO {
     @NotNull(message = "User email can not be null!")
     private String email;
 
+    @JsonIgnore
     @Column(nullable = false, length = 64)
     @NotNull(message = "User password can not be null!")
     private String password;
 
+    @JsonIgnore
     @Column(nullable = false)
     private String role;
 

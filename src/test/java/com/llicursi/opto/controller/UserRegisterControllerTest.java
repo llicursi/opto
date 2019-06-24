@@ -55,7 +55,6 @@ public class UserRegisterControllerTest {
     }
 
     @Test
-    @Sql({"/data.sql"})
     public void givenRegisterUser_whenRoleUser_thenReturnOK() throws Exception {
 
         String tokenUser1 = obtainAccessToken("user@opto.com", "123");

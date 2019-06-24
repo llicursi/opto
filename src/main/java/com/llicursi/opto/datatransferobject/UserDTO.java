@@ -21,7 +21,7 @@ public class UserDTO {
     @NotNull(message = "User email can not be null!")
     private String email;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @NotNull(message = "User password can not be null!")
     private String password;
 
@@ -79,7 +79,6 @@ public class UserDTO {
             return this;
         }
 
-        @JsonProperty
         public UserDTOBuilder setPassword(String password) {
             this.password = password;
             return this;

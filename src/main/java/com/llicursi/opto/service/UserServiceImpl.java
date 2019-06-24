@@ -14,7 +14,6 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private static final Long DEFAULT_MAX_CALORIES = 600l;
     private final UserRepository userRepository;
 
     private PasswordEncoder passwordEncoder;
@@ -22,8 +21,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     public UserServiceImpl(final UserRepository userRepository,
-                           final PasswordEncoder passwordEncoder)
-    {
+                           final PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
@@ -51,8 +49,8 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void update(UserDO user, Long userId) throws ResultNotFoundException {
         UserDO foundUser = findById(userId);
-        foundUser.setEmail(user.getEmail());
         foundUser.setName(user.getName());
+        foundUser.setSurname(user.getSurname());
         if (hasChangedPassword(user)) {
             foundUser.setPassword(passwordEncoder.encode(user.getPassword()));
         }
