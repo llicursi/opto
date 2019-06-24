@@ -1,45 +1,36 @@
 package com.llicursi.opto.datatransferobject.mapper;
 
-import com.llicursi.opto.datatransferobject.UserDTO;
-import com.llicursi.opto.datatransferobject.UserRegisterDTO;
-import com.llicursi.opto.domainobject.UserDO;
+import com.llicursi.opto.datatransferobject.SubjectDTO;
+import com.llicursi.opto.domainobject.SubjectDO;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class UserMapper {
+public class SubjectMapper {
 
-    private static final String DEFAULT_ROLE = "USER";
-    public static final String HIDDEN_PASSWORD = "******";
-
-    public static UserDTO convertToUserDTO(UserDO userDO)
+    public static SubjectDTO convertToSubjectDTO(SubjectDO subjectDO)
     {
-        UserDTO.UserDTOBuilder userDTOBuilder = UserDTO.newBuilder()
-                .setId(userDO.getId())
-                .setName(userDO.getName())
-                .setSurname(userDO.getSurname())
-                .setEmail(userDO.getEmail())
-                .setPassword(HIDDEN_PASSWORD)
-                .setRole(userDO.getRole());
+        SubjectDTO.SubjectDTOBuilder subjectDTOBuilder = SubjectDTO.newBuilder()
+                .setId(subjectDO.getId())
+                .setTitle(subjectDO.getTitle())
+                .setDescription(subjectDO.getDescription())
+                .setStart(subjectDO.getStart())
+                .setDue(subjectDO.getDue())
+                .setUser(UserMapper.convertToUserDTO(subjectDO.getUser()));
 
-        return userDTOBuilder.createUserDTO();
+        return subjectDTOBuilder.createSubjectDTO();
     }
 
-    public static UserDO convertToUserDO(UserDTO userDTO)
+    public static SubjectDO convertToSubjectDO(SubjectDTO subjectDTO)
     {
-        return new UserDO(userDTO.getName(),userDTO.getSurname(), userDTO.getEmail(), userDTO.getPassword(), userDTO.getRole());
+        return new SubjectDO(subjectDTO.getTitle(), subjectDTO.getDescription(), subjectDTO.getStart(), subjectDTO.getDue());
     }
 
-    public static UserDO convertToUserDO(UserRegisterDTO userRegisterDTO)
+    public static List<SubjectDTO> makeSubjectDTOList(Collection<SubjectDO> subjects)
     {
-        return new UserDO(userRegisterDTO.getName(), userRegisterDTO.getSurname(), userRegisterDTO.getEmail(), userRegisterDTO.getPassword(), DEFAULT_ROLE);
-    }
-
-    public static List<UserDTO> makeUserDTOList(Collection<UserDO> users)
-    {
-        return users.stream()
-                .map(UserMapper::convertToUserDTO)
+        return subjects.stream()
+                .map(SubjectMapper::convertToSubjectDTO)
                 .collect(Collectors.toList());
     }
 }
