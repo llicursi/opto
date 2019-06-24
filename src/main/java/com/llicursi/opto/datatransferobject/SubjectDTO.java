@@ -1,6 +1,7 @@
 package com.llicursi.opto.datatransferobject;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
 import java.util.Date;
@@ -21,15 +22,19 @@ public class SubjectDTO {
 
     private String description;
 
+    @JsonProperty(access= JsonProperty.Access.READ_ONLY)
+    private Integer votes;
+
     public SubjectDTO(){}
 
-    public SubjectDTO(Long id, UserDTO user, Date start, Date due, String title, String description) {
+    public SubjectDTO(Long id, UserDTO user, Date start, Date due, String title, String description, Integer votes) {
         this.id = id;
         this.user = user;
         this.start = start;
         this.due = due;
         this.title = title;
         this.description = description;
+        this.votes = votes;
     }
 
     public static SubjectDTO.SubjectDTOBuilder newBuilder()
@@ -45,6 +50,7 @@ public class SubjectDTO {
         private Date due;
         private String title;
         private String description;
+        private Integer votes;
 
         public SubjectDTO.SubjectDTOBuilder setId(Long id)
         {
@@ -77,9 +83,15 @@ public class SubjectDTO {
             return this;
         }
 
+
+        public SubjectDTO.SubjectDTOBuilder setVotes(Integer votes) {
+            this.votes = votes;
+            return this;
+        }
+
         public SubjectDTO createSubjectDTO()
         {
-            return new SubjectDTO(id, user, start, due, title, description);
+            return new SubjectDTO(id, user, start, due, title, description,votes);
         }
     }
 }

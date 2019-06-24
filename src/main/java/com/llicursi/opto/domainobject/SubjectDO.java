@@ -41,7 +41,7 @@ public class SubjectDO {
     @Column
     private Boolean active;
 
-    @Formula("select count(*) from vote where vote.subject_id = id")
+    @Formula("(select count(*) from vote where vote.subject_id = id)")
     private Integer votes;
 
     public SubjectDO(@NotNull String title, String description, @NotNull Date start, @NotNull Date due) {

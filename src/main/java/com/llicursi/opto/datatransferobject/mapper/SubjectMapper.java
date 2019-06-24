@@ -16,6 +16,7 @@ public class SubjectMapper {
                 .setTitle(subjectDO.getTitle())
                 .setDescription(subjectDO.getDescription())
                 .setStart(subjectDO.getStart())
+                .setVotes(subjectDO.getVotes())
                 .setDue(subjectDO.getDue())
                 .setUser(UserMapper.convertToUserDTO(subjectDO.getUser()));
 
