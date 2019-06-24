@@ -61,6 +61,15 @@ export class SubjectService {
     );
   }
 
+  voteSubject(id, agree: boolean): Observable<Subject> {
+    const resolvedRoute = this.resolveRoutePermission();
+    const url = `${resolvedRoute}/vote`;
+    return this.http.put<Subject>(url, httpOptions).pipe(
+      tap(_ => console.log(`vote subject id=${id}`)),
+      catchError(this.handleError<Subject>('deleteSubject'))
+    );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error); // log to console instead
@@ -72,7 +81,6 @@ export class SubjectService {
    * Resolve the complete url based on the presence of the userid.
    *  {api}/subjects**
    *  {api}/users/{userid}/subjects**
-   * @param userid
    */
   private resolveRoutePermission(userid?: number) {
 

@@ -1,6 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {SubjectService} from '../services/subject.service';
 import {Subject} from '../models/subject';
+import * as moment from 'moment';
 import {MatDialog, MatTable} from '@angular/material';
 import {AlertService} from '../services/alerts.service';
 import {ActivatedRoute} from '@angular/router';
@@ -115,22 +116,14 @@ export class SubjectsComponent implements OnInit, OnDestroy {
   private parseToElement(element: Subject, result: any) {
     element.description = result.description;
     element.title = result.title;
-    element.creation = result.creation;
+    element.start = result.start;
     element.user = result.user;
     element.due = result.due;
   }
 
-  /**
-   * Sort displayed subjects list in decreasing order of date time.
-   * Newest subject should appear on top.
-   * @param res List of subjects
-   */
-  private sortData(res: Subject[]) {
-    this.data = res.sort((a: any, b: any) => new Date(b.date + ' ' + b.time).getTime() - new Date(a.date + ' ' + a.time).getTime());
-  }
 
   private refreshDataDisplay(res: Subject[]) {
-    this.sortData(res);
+    this.data = res;
     this.matTable.renderRows();
   }
 }

@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 
 @Getter
@@ -24,6 +27,19 @@ public class SubjectDTO {
 
     @JsonProperty(access= JsonProperty.Access.READ_ONLY)
     private Integer votes;
+
+    public String getExpires(){
+        Duration between = Duration.between(LocalDateTime.now(), due.toInstant()
+                .atZone(ZoneId.systemDefault())
+                .toLocalDateTime());
+
+        if (between.toDays() >= 2){
+            return String.format("%d days", between.toDays());
+        } else if (between.toHours() >= 1){
+            return String.format("%d hours", between.toHours());
+        }
+        return String.format("%d min", between.toMinutes());
+    }
 
     public SubjectDTO(){}
 

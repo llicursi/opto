@@ -18,8 +18,6 @@ export class UserService {
   }
 
   register(user: UserRegister) {
-    console.log('User to be created');
-    console.log(user);
     return this.http.post(`${environment.apiUrl}/register`, user, {headers: {'content-type': 'application/json'}});
   }
 
