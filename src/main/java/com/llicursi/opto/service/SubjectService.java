@@ -11,7 +11,7 @@ public interface SubjectService {
 
     SubjectDO findById(Long id) throws ResultNotFoundException;
 
-    SubjectDO create(SubjectDO subject);
+    SubjectDO create(SubjectDO subject, Long userId) throws ResultNotFoundException;
 
     void update(SubjectDO subject, Long userId) throws ResultNotFoundException;
 
