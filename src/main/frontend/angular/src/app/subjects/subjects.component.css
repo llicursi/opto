@@ -26,14 +26,27 @@ th.mat-column-position, td.mat-column-position {
 }
 
 
-.header-calories{
+.no-vote{
   border-left: 6px solid #f0f0f0;
 }
-.expected-calories{
+.vote-positive{
   border-left: 6px solid #7dc16c;
 }
-.over-calories,
-.expected-calories.over-calories{
+.vote-negative,
+.vote-positive.vote-negative{
   border-left: 6px solid #e95050;
 }
 
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+tr.example-detail-row {
+  height: 0;
+}

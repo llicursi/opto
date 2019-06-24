@@ -10,8 +10,6 @@ const httpOptions = {
 };
 const endpoint = '/subject';
 
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -40,7 +38,7 @@ export class SubjectService {
   addSubject(subject, userid?: number): Observable<Subject> {
     const resolvedRoute = this.resolveRoutePermission(userid);
     return this.http.post<Subject>(`${resolvedRoute}`, subject, httpOptions).pipe(
-      tap((subject: Subject) => console.log(`added subject w/ id=${subject.id}`)),
+      tap((s: Subject) => console.log(`added subject w/ id=${s.id}`)),
       catchError(this.handleError<Subject>('addSubject'))
     );
   }
@@ -65,10 +63,7 @@ export class SubjectService {
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-
       console.error(error); // log to console instead
-
-      // Let the app keep running by returning an empty result.
       return of(result as T);
     };
   }

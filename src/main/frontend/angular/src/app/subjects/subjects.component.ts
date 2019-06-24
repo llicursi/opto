@@ -2,68 +2,50 @@ import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {SubjectService} from '../services/subject.service';
 import {Subject} from '../models/subject';
 import {MatDialog, MatTable} from '@angular/material';
-import * as moment from 'moment';
 import {AlertService} from '../services/alerts.service';
-import {SettingsService} from '../services/settings.service';
 import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
-import {UserService} from '../services/users.service';
-import {SubjectsFilterComponent} from '../subjects-filter/subjects-filter.component';
-import {SubjectFilter} from '../models/subject-filter';
-
+import {animate, state, style, transition, trigger} from '@angular/animations';
 @Component({
   selector: 'app-subjects',
   templateUrl: './subjects.component.html',
-  styleUrls: ['./subjects.component.css']
+  styleUrls: ['./subjects.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ])
+  ]
 })
 export class SubjectsComponent implements OnInit, OnDestroy {
 
-  displayedColumns: string[] = ['time', 'description', 'calories', 'star'];
+  displayedColumns: string[] = ['title', 'votes', 'due'];
   data: Subject[] = [];
   isLoadingResults = true;
-
-  calPerDay = {};
-  maxCalPerDay: number;
+  expandedElement: Subject | null;
 
   userId: number = undefined;
 
   private subSettings: Subscription;
   private subRoute: Subscription;
 
-  @ViewChild(MatTable) matTable: MatTable<any>;
-  @ViewChild(SubjectsFilterComponent) filterSubjects: SubjectsFilterComponent;
+  @ViewChild(MatTable, {static: false}) matTable: MatTable<any>;
 
   constructor(private subjectsService: SubjectService,
               private dialog: MatDialog,
               private alertService: AlertService,
-              private route: ActivatedRoute,
-              private settingsService: SettingsService) {
+              private route: ActivatedRoute) {
 
   }
 
   ngOnInit() {
-
-    // Initially loads the settings with max calories and observes for new changes
-    this.settingsService.get();
-
-    this.subSettings = this.settingsService.currentSettings.subscribe(settings => {
-      if (settings.maxCalories) {
-        const firstTime = (!this.maxCalPerDay);
-        this.maxCalPerDay = settings.maxCalories;
-        if (!firstTime) { this.matTable.renderRows(); }
-      }
-    });
 
     // Load the userId if provided on route
     this.subRoute = this.route.params.subscribe(params => {
       this.userId = params.id;
     });
     this.loadSubjectsList();
-
-    // Monitor any change to the filters
-    this.filterSubjects.currentFilter.subscribe(newFilter => {
-      this.filter = newFilter;
-    });
 
   }
 
@@ -81,69 +63,6 @@ export class SubjectsComponent implements OnInit, OnDestroy {
         console.log(err);
         this.isLoadingResults = false;
       });
-  }
-
-  /**
-   * Creates the new subject on a display dialog
-   */
-  createNewSubject() {
-
-    const element = new Subject();
-    element.id = -1;
-    element.description = '';
-    element.calories = 100;
-    element.date = moment(new Date()).format('YYYY-MM-DD');
-    element.time = moment(new Date()).format('HH:mm');
-
-    const modalCreate = this.dialog.open(SubjectsModalComponent, {
-      data: {
-        title: 'New subject',
-        subject: element,
-      }
-    });
-    modalCreate.afterClosed().subscribe(createdSubject => {
-      if (!!createdSubject && createdSubject.description) {
-        this.saveSubject(createdSubject);
-      }
-    });
-  }
-
-  /**
-   * Edits the current subject on a Dialog display
-   */
-  editSubject(selectedSubject: Subject) {
-    const modalUpdate = this.dialog.open(SubjectsModalComponent, {
-      data: {
-        title: 'Edit subject',
-        subject: selectedSubject,
-      }
-    });
-    modalUpdate.afterClosed().subscribe(modifiedSubject => {
-      if (!!modifiedSubject && modifiedSubject.description) {
-        this.updateSubject(selectedSubject, modifiedSubject);
-      } else if (!!modifiedSubject && modifiedSubject.delete) {
-        this.deleteSubject(selectedSubject);
-      }
-    });
-  }
-
-  /**
-   * Update the subject on the list and persist
-   */
-  private updateSubject(selectedSubject: Subject, modifiedSubject: Subject) {
-    this.subjectsService.updateSubject(modifiedSubject.id, modifiedSubject, this.userId)
-      .subscribe(
-        data => {
-          this.parseToElement(selectedSubject, modifiedSubject);
-          this.refreshDataDisplay(this.data);
-          // Call service
-          this.alertService.snackSucess('Subject saved');
-        },
-        error => {
-          console.error(error);
-          this.alertService.snackError('Failed to update ' + selectedSubject.description);
-        });
-
   }
 
   /**
@@ -195,9 +114,10 @@ export class SubjectsComponent implements OnInit, OnDestroy {
    */
   private parseToElement(element: Subject, result: any) {
     element.description = result.description;
-    element.calories = result.calories;
-    element.time = result.time;
-    element.date = result.date;
+    element.title = result.title;
+    element.creation = result.creation;
+    element.user = result.user;
+    element.due = result.due;
   }
 
   /**
@@ -211,14 +131,6 @@ export class SubjectsComponent implements OnInit, OnDestroy {
 
   private refreshDataDisplay(res: Subject[]) {
     this.sortData(res);
-
-    this.calPerDay = res.reduce((acc, el) => {
-      acc[el.date] = (!!acc[el.date])
-        ? acc[el.date] + (el.calories)
-        : (el.calories);
-      return acc;
-    }, {});
-
     this.matTable.renderRows();
   }
 }

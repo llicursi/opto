@@ -18,6 +18,7 @@ import {Error404Component} from './pages/error404/error404.component';
 import {LoginRegisterComponent} from './login-register/login-register.component';
 import {UsersComponent} from './users/users.component';
 import {UsersModalComponent} from './users-modal/users-modal.component';
+import {SubjectsComponent} from './subjects/subjects.component';
 
 @NgModule({
   exports: [
@@ -31,6 +32,7 @@ import {UsersModalComponent} from './users-modal/users-modal.component';
     HasRoleDirective,
     LoginComponent,
     LoginRegisterComponent,
+    SubjectsComponent,
     UsersComponent,
     UsersModalComponent,
   ],
