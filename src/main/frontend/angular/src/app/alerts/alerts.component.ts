@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { AlertService} from '../services/alerts.service';
@@ -8,7 +8,7 @@ import { AlertService} from '../services/alerts.service';
   templateUrl: './alerts.component.html',
   styleUrls: ['./alerts.component.css']
 })
-export class AlertsComponent implements OnInit {
+export class AlertsComponent implements OnInit, OnDestroy {
 
   private subscription: Subscription;
   message: any;
