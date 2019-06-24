@@ -11,4 +11,6 @@ public interface SubjectRepository extends CrudRepository<SubjectDO, Long> {
     @Query("SELECT s FROM SubjectDO s " +
             "WHERE s.active = true AND s.start <= CURRENT_TIMESTAMP AND s.due >= CURRENT_TIMESTAMP ")
     List<SubjectDO> findAllActive();
+
+    List<SubjectDO> findAllByUser_id(Long userId);
 }

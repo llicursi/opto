@@ -1,5 +1,6 @@
 package com.llicursi.opto.controller;
 
+import com.llicursi.opto.auth.AuthUtils;
 import com.llicursi.opto.datatransferobject.SubjectDTO;
 import com.llicursi.opto.datatransferobject.mapper.SubjectMapper;
 import com.llicursi.opto.service.SubjectService;
@@ -38,7 +39,8 @@ public class SubjectController {
      */
     @GetMapping("/user/subject")
     public List<SubjectDTO> getAllSubjectsFromUser(Principal principal) {
-        return SubjectMapper.makeSubjectDTOList(subjectService.findAll());
+        Long currentUserId = AuthUtils.retrieveUserId(principal);
+        return SubjectMapper.makeSubjectDTOList(subjectService.findAll(currentUserId));
     }
 
 }

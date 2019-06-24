@@ -20,8 +20,8 @@ public class SubjectServiceImpl implements SubjectService {
     }
 
     @Override
-    public List<SubjectDO> findAll(){
-        return (List<SubjectDO>) subjectRepository.findAll();
+    public List<SubjectDO> findAll(Long currentUserId){
+        return subjectRepository.findAllByUser_id(currentUserId);
     }
 
     @Override

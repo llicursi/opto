@@ -1,14 +1,13 @@
 package com.llicursi.opto.service;
 
 import com.llicursi.opto.domainobject.SubjectDO;
-import com.llicursi.opto.domainobject.UserDO;
 import com.llicursi.opto.exception.ResultNotFoundException;
 
 import java.util.List;
 
 public interface SubjectService {
 
-    List<SubjectDO> findAll();
+    List<SubjectDO> findAll(Long currentUserId);
 
     SubjectDO findById(Long id) throws ResultNotFoundException;
 
