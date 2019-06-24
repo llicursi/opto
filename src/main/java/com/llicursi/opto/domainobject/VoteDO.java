@@ -2,8 +2,10 @@ package com.llicursi.opto.domainobject;
 
 import lombok.Data;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Date;
 
 @Data
@@ -23,4 +25,10 @@ public class VoteDO {
     @Column
     private Date creation;
 
+    public VoteDO(VoteIdentity voteIdentity, Boolean agree, Integer changes, Date creation) {
+        this.voteIdentity = voteIdentity;
+        this.agree = agree;
+        this.changes = changes;
+        this.creation = creation;
+    }
 }

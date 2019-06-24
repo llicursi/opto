@@ -1,14 +1,22 @@
 package com.llicursi.opto.service;
 
 import com.llicursi.opto.dataaccessobject.SubjectRepository;
+import com.llicursi.opto.dataaccessobject.VoteRepository;
+import com.llicursi.opto.datatransferobject.VoteDTO;
 import com.llicursi.opto.domainobject.SubjectDO;
 import com.llicursi.opto.domainobject.UserDO;
+import com.llicursi.opto.domainobject.VoteDO;
+import com.llicursi.opto.domainobject.VoteIdentity;
 import com.llicursi.opto.exception.InvalidDateRangeException;
+import com.llicursi.opto.exception.InvalidVoteException;
 import com.llicursi.opto.exception.ResultNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -20,11 +28,13 @@ public class SubjectServiceImpl implements SubjectService {
 
     private final SubjectRepository subjectRepository;
     private final UserService userService;
+    private final VoteRepository voteRepository;
 
     @Autowired
-    public SubjectServiceImpl(final SubjectRepository subjectRepository, final UserService userService) {
+    public SubjectServiceImpl(final SubjectRepository subjectRepository, final UserService userService, final VoteRepository voteRepository) {
         this.subjectRepository = subjectRepository;
         this.userService = userService;
+        this.voteRepository = voteRepository;
     }
 
     @Override
@@ -87,6 +97,48 @@ public class SubjectServiceImpl implements SubjectService {
     public void delete(Long id) throws ResultNotFoundException {
         SubjectDO subjectDO = findById(id);
         subjectRepository.delete(subjectDO);
+    }
+
+    @Override
+    @Transactional
+    public void vote(Long userId, VoteDTO voteDTO) throws ResultNotFoundException, InvalidVoteException {
+        UserDO userDO = userService.findById(userId);
+        SubjectDO subjectDO = subjectRepository.findById(voteDTO.getSubject()).orElseThrow(() -> new ResultNotFoundException("Could not find current subject with id: " + voteDTO.getSubject()));
+
+        VoteIdentity voteIdentity = new VoteIdentity(userDO, subjectDO);
+
+        VoteDO voteDO = validateVote(voteIdentity, voteDTO.getAgree(), subjectDO);
+
+        voteRepository.save(voteDO);
+    }
+
+    /**
+     * Validates if the Subject is still active and if the user still can vote on it
+     *
+     * @param voteIdentity
+     * @param subjectDO
+     * @return Number of times current user voted on this same subject
+     * @throws InvalidVoteException
+     */
+    private VoteDO validateVote(VoteIdentity voteIdentity, boolean agree, SubjectDO subjectDO) throws InvalidVoteException {
+        if (subjectRepository.findAllActive() == null || !subjectRepository.findAllActive().contains(subjectDO)) {
+            throw new InvalidVoteException("The current subject: " + subjectDO.getId() + " is no longer active for voting");
+        }
+
+        VoteDO voteDO = voteRepository.findById(voteIdentity).orElse(null);
+        if (voteDO == null) {
+            return new VoteDO(voteIdentity, agree, 1, Date.from(LocalDateTime.now().atZone(ZoneOffset.systemDefault()).toInstant()));
+        }
+
+        if (voteDO.getChanges() > 1) {
+            throw new InvalidVoteException("You exceed the number of times you can vote on the same subject");
+        } else if (voteDO.getAgree() == agree) {
+            throw new InvalidVoteException("You already voted with this option - agree = " + agree);
+        } else {
+            voteDO.setAgree(agree);
+            voteDO.setChanges(voteDO.getChanges() + 1);
+            return voteDO;
+        }
     }
 
 

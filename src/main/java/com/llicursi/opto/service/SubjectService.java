@@ -1,7 +1,9 @@
 package com.llicursi.opto.service;
 
+import com.llicursi.opto.datatransferobject.VoteDTO;
 import com.llicursi.opto.domainobject.SubjectDO;
 import com.llicursi.opto.exception.InvalidDateRangeException;
+import com.llicursi.opto.exception.InvalidVoteException;
 import com.llicursi.opto.exception.ResultNotFoundException;
 
 import java.util.List;
@@ -19,4 +21,6 @@ public interface SubjectService {
     void delete(Long id) throws ResultNotFoundException;
 
     List<SubjectDO> findAllActive();
+
+    void vote(Long userId, VoteDTO voteDTO) throws ResultNotFoundException, InvalidVoteException;
 }
