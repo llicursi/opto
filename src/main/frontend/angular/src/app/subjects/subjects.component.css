@@ -30,9 +30,11 @@ th.mat-column-position, td.mat-column-position {
 }
 
 .subject-vote{
-  width: 40px;
-  min-width: 40px;
+  width: 30px;
+  min-width: 30px;
   padding: 0px;
+  margin: 0px 3px;
+  height: 32px;
 }
 
 .subject-details{

@@ -36,14 +36,14 @@ export class AlertService {
   snackSucess(message: string) {
     this.snackBar.open(message, null, {
       panelClass: 'snack-success',
-      duration: 2000,
+      duration: 20000,
     });
   }
 
   snackError(message: string) {
     this.snackBar.open(message, null, {
       panelClass: 'snack-error',
-      duration: 2000,
+      duration: 20000,
     });
   }
 

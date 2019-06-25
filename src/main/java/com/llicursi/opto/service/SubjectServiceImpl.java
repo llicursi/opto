@@ -133,7 +133,7 @@ public class SubjectServiceImpl implements SubjectService {
         if (voteDO.getChanges() > 1) {
             throw new InvalidVoteException("You exceed the number of times you can vote on the same subject");
         } else if (voteDO.getAgree() == agree) {
-            throw new InvalidVoteException("You already voted with this option - agree = " + agree);
+            throw new InvalidVoteException("You already voted with this option ");
         } else {
             voteDO.setAgree(agree);
             voteDO.setChanges(voteDO.getChanges() + 1);

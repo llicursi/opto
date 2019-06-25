@@ -10,6 +10,15 @@ npm install -g npm@latest
 npm build
 ``` 
 
+## Setup database
+Create a new schema on MySQL called `opto` and **flyway** will populate it with 
+the initial database structure on first execution. 
+
+Initial data can be found on:
+```
+src/test/resources/db/migrations/
+```
+
 ## Build
 At the root folder of this project, execute : 
 ```
@@ -36,3 +45,14 @@ Development execution can be achieved with Angular 7 embedded or on a distinct s
 cd src/main/frontend/angular/
 ng serve -c local
 ```
+
+## Libraries
+
+ - Lombok
+ - Spring (web, mvc, data, security)
+ - Flyway
+ - Hibernate
+ - Angular 7
+ - Angular Material
+ - Moment.js
+ 

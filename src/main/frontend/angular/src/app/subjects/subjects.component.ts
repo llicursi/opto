@@ -94,19 +94,17 @@ export class SubjectsComponent implements OnInit, OnDestroy {
   }
 
 
-  voteSubject(selectedSubject: Subject, event) {
+  voteSubject(selectedSubject: Subject, agree: boolean, event) {
     if (event) {
       event.preventDefault();
       event.stopPropagation();
     }
     const vote = new Vote();
-    vote.agree = true;
+    vote.agree = agree;
     vote.subject = selectedSubject.id;
     this.subjectsService.voteSubject(vote) .subscribe(
-      data => {
-        data;
-      }, error => {
-        this.alertService.snackError(error.message);
+      _ => {}, error => {
+        this.alertService.snackError(error);
       });
   }
 

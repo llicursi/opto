@@ -37,3 +37,16 @@ button.mat-raised-button, a.mat-raised-button{
   margin-right: 12px;
 }
 
+
+.snack-success{
+  width: 200px;
+  color: lawngreen;
+  margin: 10px auto;
+}
+
+.snack-error{
+  width: 200px;
+  color: firebrick;
+  margin: 10px auto;
+}
+
