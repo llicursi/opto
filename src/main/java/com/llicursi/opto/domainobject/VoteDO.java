@@ -25,6 +25,8 @@ public class VoteDO {
     @Column
     private Date creation;
 
+    public VoteDO(){}
+
     public VoteDO(VoteIdentity voteIdentity, Boolean agree, Integer changes, Date creation) {
         this.voteIdentity = voteIdentity;
         this.agree = agree;

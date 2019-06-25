@@ -51,6 +51,9 @@ export class SubjectsModalComponent implements OnInit {
     this.updateDueDateLimits(this.today);
   }
 
+  /**
+   * Receives the Subject and convert to a FormControl
+   */
   getSubjectDetails(element: Subject) {
     this.stateForm.setValue({
       description: element.description,
@@ -61,11 +64,18 @@ export class SubjectsModalComponent implements OnInit {
     });
 
   }
-
+  /**
+   * Triggers on Start date 'change' or 'input'
+   */
   changeStartDate(type: string, event: MatDatepickerInputEvent<Date>) {
     this.updateDueDateLimits(event.value);
   }
 
+  /**
+   * Defines the rules of the due date, each time the start date
+   * gets updated. Moves the due date to seven days after start
+   * date or to thirty one days after start date.
+   */
   private updateDueDateLimits(baseDate: Date) {
     let date = new Date(baseDate);
     date.setDate(date.getDate() + 7);
@@ -95,7 +105,6 @@ export class SubjectsModalComponent implements OnInit {
    * Confirm to save subject
    */
   saveSubject() {
-    this.stateForm.value.date = moment(this.stateForm.value.date).format(SubjectsModalComponent.DATE_FORMAT);
     this.dialogRef.close(this.stateForm.value);
   }
 

@@ -8,6 +8,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {SubjectsModalComponent} from '../subjects-modal/subjects-modal.component';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+import {Vote} from '../models/vote';
 
 @Component({
   selector: 'app-subjects',
@@ -92,6 +93,23 @@ export class SubjectsComponent implements OnInit, OnDestroy {
     });
   }
 
+
+  voteSubject(selectedSubject: Subject, event) {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+    const vote = new Vote();
+    vote.agree = true;
+    vote.subject = selectedSubject.id;
+    this.subjectsService.voteSubject(vote) .subscribe(
+      data => {
+        data;
+      }, error => {
+        this.alertService.snackError(error.message);
+      });
+  }
+
   /**
    * Update the subject on the list and persist
    */
@@ -124,8 +142,7 @@ export class SubjectsComponent implements OnInit, OnDestroy {
       .subscribe(
         newSubject => {
           this.data.push(newSubject);
-          this.refreshDataDisplay(this.data);
-
+          this.loadSubjectsList();
           this.alertService.snackSucess('Subject created');
         },
         error => {

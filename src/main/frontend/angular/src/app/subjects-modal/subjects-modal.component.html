@@ -6,7 +6,7 @@
       <input matInput formControlName="title" type="text" placeholder="Title">
     </mat-form-field>
     <mat-form-field>
-      <input matInput formControlName="description" type="text" placeholder="Description">
+      <textarea matInput formControlName="description" placeholder="Description"></textarea>
     </mat-form-field>
     <div style="justify-content: space-between;">
       <mat-form-field class="">
@@ -22,20 +22,20 @@
         <mat-datepicker #pickerDue></mat-datepicker>
       </mat-form-field>
     </div>
-
-    <div mat-dialog-actions *ngIf="!requestConfirmation">
-      <button mat-raised-button color="primary" type="submit">Save</button>
-      <a mat-raised-button (click)="closeModal()">Cancel</a>
-      <a mat-icon-button class="right-button" title="Delete this subject" color="warn" (click)="requestConfirmation=true">
-        <mat-icon>delete_forever</mat-icon>
-      </a>
-    </div>
-    <div mat-dialog-actions *ngIf="requestConfirmation">
-      <span class="delete-confirm">Are you sure you want to <b>delete</b> ?</span>
-      <a mat-raised-button class="right-button" color="warn"  (click)="confirmDelete()">Yes</a>
-      <a mat-raised-button class="right-button" (click)="requestConfirmation=false">No</a>
-
-    </div>
+    <span *ngIf="">
+      <div mat-dialog-actions *ngIf="!requestConfirmation">
+        <button mat-raised-button color="primary" type="submit">Save</button>
+        <a mat-raised-button (click)="closeModal()">Cancel</a>
+        <a mat-icon-button class="right-button" title="Delete this subject" color="warn" (click)="requestConfirmation=true">
+          <mat-icon>delete_forever</mat-icon>
+        </a>
+      </div>
+      <div mat-dialog-actions *ngIf="requestConfirmation">
+        <span class="delete-confirm">Are you sure you want to <b>delete</b> ?</span>
+        <a mat-raised-button class="right-button" color="warn"  (click)="confirmDelete()">Yes</a>
+        <a mat-raised-button class="right-button" (click)="requestConfirmation=false">No</a>
+        </div>
+    </span>
   </form>
 
 </div>

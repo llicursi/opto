@@ -4,6 +4,7 @@ import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http
 import { catchError, tap, map } from 'rxjs/operators';
 import { Subject } from '../models/subject';
 import {environment} from '../../environments/environment';
+import {Vote} from '../models/vote';
 
 const httpOptions = {
   headers: new HttpHeaders({'Content-Type': 'application/json'})
@@ -61,12 +62,11 @@ export class SubjectService {
     );
   }
 
-  voteSubject(id, agree: boolean): Observable<Subject> {
+  voteSubject(vote: Vote): Observable<Vote> {
     const resolvedRoute = this.resolveRoutePermission();
     const url = `${resolvedRoute}/vote`;
-    return this.http.put<Subject>(url, httpOptions).pipe(
-      tap(_ => console.log(`vote subject id=${id}`)),
-      catchError(this.handleError<Subject>('deleteSubject'))
+    return this.http.put<Vote>(url, vote, httpOptions).pipe(
+      tap(_ => console.log(`vote subject id=${vote.subject}`))
     );
   }
 

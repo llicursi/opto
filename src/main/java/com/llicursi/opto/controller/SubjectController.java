@@ -88,7 +88,7 @@ public class SubjectController {
     /**
      * Vote subject
      */
-    @PutMapping("/subject/")
+    @PutMapping("/subject/vote")
     public void voteSubject(@RequestBody VoteDTO voteDTO, Principal principal) throws ResultNotFoundException, InvalidVoteException {
         Long currentUserId = AuthUtils.retrieveUserId(principal);
         subjectService.vote(currentUserId, voteDTO);
