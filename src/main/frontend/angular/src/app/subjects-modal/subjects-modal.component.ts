@@ -1,6 +1,13 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+  MAT_DIALOG_DATA,
+  MatDatepickerInputEvent,
+  MatDialogRef
+} from '@angular/material';
 import {Subject} from '../models/subject';
 import {MAT_MOMENT_DATE_FORMATS, MomentDateAdapter} from '@angular/material-moment-adapter';
 import * as moment from 'moment';
@@ -23,7 +30,8 @@ export class SubjectsModalComponent implements OnInit {
   requestConfirmation = false;
   title = 'Edit subject';
   today: Date = new Date();
-  dueDate: Date = new Date();
+  dueDateFrom: Date = new Date();
+  dueDateTo: Date = new Date();
   stateForm: FormGroup = this.fb.group({
     title: new FormControl({value: ''}, Validators.required),
     description: new FormControl({value: ''}),
@@ -37,6 +45,12 @@ export class SubjectsModalComponent implements OnInit {
               private fb: FormBuilder) {
   }
 
+  ngOnInit() {
+    this.title = this.data.title;
+    this.getSubjectDetails(this.data.subject);
+    this.updateDueDateLimits(this.today);
+  }
+
   getSubjectDetails(element: Subject) {
     this.stateForm.setValue({
       description: element.description,
@@ -48,10 +62,34 @@ export class SubjectsModalComponent implements OnInit {
 
   }
 
-  ngOnInit() {
-    this.title = this.data.title;
-    this.getSubjectDetails(this.data.subject);
+  changeStartDate(type: string, event: MatDatepickerInputEvent<Date>) {
+    this.updateDueDateLimits(event.value);
   }
+
+  private updateDueDateLimits(baseDate: Date) {
+    let date = new Date(baseDate);
+    date.setDate(date.getDate() + 7);
+    this.dueDateFrom = date;
+
+    date = new Date(baseDate);
+    date.setDate(date.getDate() + 31);
+    this.dueDateTo = date;
+
+    const currentDueDate = this.stateForm.get('due').value;
+    const firstDate = moment(baseDate);
+    const secondDate = moment(currentDueDate);
+    const diffInDays = (firstDate.diff(secondDate, 'days'));
+
+    if (diffInDays > -7) {
+      this.stateForm.patchValue({due: this.dueDateFrom});
+      console.log(this.dueDateFrom);
+
+    } else if (diffInDays < -31) {
+      this.stateForm.patchValue({due: this.dueDateTo});
+    }
+    console.log('Diff in DAYS: ' + diffInDays);
+  }
+
 
   /**
    * Confirm to save subject

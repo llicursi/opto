@@ -10,12 +10,14 @@
     </mat-form-field>
     <div style="justify-content: space-between;">
       <mat-form-field class="">
-        <input matInput readonly formControlName="start" [min]="today" [matDatepicker]="picker" placeholder="From">
+        <input matInput readonly formControlName="start" [min]="today" [matDatepicker]="picker"
+               (dateInput)="changeStartDate('input', $event)" (dateChange)="changeStartDate('change', $event)"
+               placeholder="From">
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
       <mat-form-field class="">
-        <input matInput readonly formControlName="due" [min]="today" [matDatepicker]="pickerDue" placeholder="To">
+        <input matInput readonly formControlName="due" [min]="dueDateFrom" [max]="dueDateTo" [matDatepicker]="pickerDue" placeholder="To">
         <mat-datepicker-toggle matSuffix [for]="pickerDue"></mat-datepicker-toggle>
         <mat-datepicker #pickerDue></mat-datepicker>
       </mat-form-field>

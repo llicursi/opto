@@ -1,15 +1,19 @@
-.mat-column-time{
-  width: 80px;
+/* Column Widths */
+.mat-column-votes,
+.mat-column-due {
+  min-width: 70px;
+  text-align: center;
 }
 
-.mat-column-calories{
-  width: 80px;
+.mat-column-opts{
+  min-width: 90px;
+  text-align: center;
 }
 
-span.mat-cell-title-date{
-  font-size: 12px;
-  display: block;
+.mat-column-title{
+  width: 80%;
 }
+
 
 td.mat-column-star {
   width: 10px;
@@ -25,6 +29,15 @@ th.mat-column-position, td.mat-column-position {
   margin: 6px 2px;
 }
 
+.subject-vote{
+  width: 40px;
+  min-width: 40px;
+  padding: 0px;
+}
+
+.subject-details{
+  background: #f0f0f0;
+}
 
 .no-vote{
   border-left: 6px solid #f0f0f0;

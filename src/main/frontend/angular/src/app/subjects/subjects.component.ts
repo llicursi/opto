@@ -8,6 +8,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Subscription} from 'rxjs';
 import {SubjectsModalComponent} from '../subjects-modal/subjects-modal.component';
 import {animate, state, style, transition, trigger} from '@angular/animations';
+
 @Component({
   selector: 'app-subjects',
   templateUrl: './subjects.component.html',
@@ -22,7 +23,7 @@ import {animate, state, style, transition, trigger} from '@angular/animations';
 })
 export class SubjectsComponent implements OnInit, OnDestroy {
 
-  displayedColumns: string[] = ['title', 'votes', 'due'];
+  displayedColumns: string[] = ['title', 'votes', 'due', 'opts'];
   data: Subject[] = [];
   isLoadingResults = true;
   expandedElement: Subject | null;
