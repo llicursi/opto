@@ -2,12 +2,13 @@
 [![Build Status](https://travis-ci.org/llicursi/opto.svg?branch=master)](https://travis-ci.org/llicursi/opto)  
 Opto, decisions made easy - A java/angular voting system
 
-## Initialize Angular 7
-Before starting the execution, make sure all angular dependencies were downloaded
+## Initialize Angular 8
+Before starting the execution, make sure that you have at least `NodeJs 10.9` and that all angular dependencies were downloaded
 ```
 cd src/main/frontend/angular
 npm install -g npm@latest
-npm build
+npm install
+npm run-script build
 ``` 
 
 ## Setup database
@@ -52,7 +53,7 @@ ng serve -c local
  - Spring (web, mvc, data, security)
  - Flyway
  - Hibernate
- - Angular 7
+ - Angular 8
  - Angular Material
  - Moment.js
  
